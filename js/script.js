@@ -108,3 +108,34 @@ editForm.addEventListener("submit",(evt)=>{
 
     toggleForms();
 })
+
+const inputPesquisa = document.querySelector("#search-input");
+
+
+const pegarInput =()=>{
+    console.log(inputPesquisa.value)
+}
+
+
+
+inputPesquisa.addEventListener("focus",(evt)=>{
+ pegar = setInterval(pegarInput,2000);
+    pegar;
+})
+
+inputPesquisa.addEventListener("blur",(evt)=>{
+    window.clearInterval(pegar);
+})
+
+const mostrarPesquisados =()=>{
+    const tarefaPesquisada = [...todoList.children];
+    tarefaPesquisada.map((el)=>{
+        el.firstChild.
+    })
+}
+
+
+
+
+
+
