@@ -5,6 +5,7 @@ const editForm = document.querySelector("#edit-form");
 const editInput = document.querySelector("#edit-input");
 const cancelEditBtn = document.querySelector("#cancel-edit-btn");
 let oldInputValue;
+let arrayTarefas = [];
 
 const saveTodo = (text)=>{
     const todo = document.createElement("div");
@@ -33,6 +34,7 @@ const saveTodo = (text)=>{
 
     todoInput.value = "";
     todoInput.focus();
+
 }
 
 const toggleForms = ()=>{
@@ -112,27 +114,64 @@ editForm.addEventListener("submit",(evt)=>{
 const inputPesquisa = document.querySelector("#search-input");
 
 
-const pegarInput =()=>{
-    console.log(inputPesquisa.value)
+const fazerPesquisa =()=>{
+    let nome_pesquisa = inputPesquisa.value;
+    
+    const tarefaPesquisada = [...todoList.children];
+    tarefaPesquisada.map((el)=>{
+
+        let letras_Pesquisa = [...nome_pesquisa];
+
+        for(i of letras_Pesquisa){
+
+            let contem =el.children[0].innerHTML.includes(nome_pesquisa);
+            
+                if(contem==true){
+                    el.classList.remove("hide");
+                    el.classList.add("todo");
+                }else if(i == ""){
+                    el.classList.remove("hide");
+                    el.classList.add("todo");
+                }else{
+                    el.classList.add("hide");
+                    el.classList.remove("todo");
+                }
+        }
+    })
 }
 
 
-
 inputPesquisa.addEventListener("focus",(evt)=>{
- pegar = setInterval(pegarInput,2000);
+    pegar = setInterval(fazerPesquisa,200);
     pegar;
 })
 
 inputPesquisa.addEventListener("blur",(evt)=>{
     window.clearInterval(pegar);
+
+    const tarefasNaLista = [...todoList.children];
+    
+    tarefasNaLista.map((el)=>{
+            if(!arrayTarefas.includes(el.children[0].innerHTML)){
+                arrayTarefas.push(el.children[0].innerHTML);
+            }
+    });
+    console.log(arrayTarefas);
+
+    [...todoList.children].map((el)=>{
+        console.log(el)
+        el.remove();
+    });
+
+    console.log(arrayTarefas)
+        arrayTarefas.map((el)=>{
+            console.log(el)
+            saveTodo(el);
+        })
+        arrayTarefas = [];
 })
 
-const mostrarPesquisados =()=>{
-    const tarefaPesquisada = [...todoList.children];
-    tarefaPesquisada.map((el)=>{
-        el.firstChild.
-    })
-}
+
 
 
 
