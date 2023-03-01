@@ -169,16 +169,12 @@ inputPesquisa.addEventListener("blur",(evt)=>{
         }
     });
 
-    console.log(arrayTarefas);
 
     [...todoList.children].map((el)=>{
-        console.log(el)
         el.remove();
     });
-
-    console.log(arrayTarefas)
+    
         arrayTarefas.map((el)=>{
-            console.log(el)
             saveTodo(el.nome,el.status);
         })
         arrayTarefas = [];
@@ -193,6 +189,38 @@ class tarefa {
         this.status = status;
     }
 }
+
+const filterSelect = document.querySelector("#filter-select");
+
+filterSelect.addEventListener("click",(evt)=>{
+
+    let option = filterSelect.options[filterSelect.selectedIndex];
+    const tarefasNaLista = [...todoList.children];
+
+    tarefasNaLista.map((el)=>{
+        el.classList.add("todo");
+        el.classList.remove("hide");
+    })
+
+    tarefasNaLista.map((el)=>{
+        
+        if(option.text == "Feitas"){
+
+            if(!el.classList.contains("done")){
+                el.classList.add("hide");
+                el.classList.remove("todo");
+            }
+        }else if(option.text == "Pendentes"){
+            if(el.classList.contains("done")){
+                el.classList.add("hide");
+                el.classList.remove("todo");
+            }
+        }else if(option.text == "Todas"){
+            el.classList.remove("hide");
+            el.classList.add("todo");
+        }
+    })    
+})
 
 
 
