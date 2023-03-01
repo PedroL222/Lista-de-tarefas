@@ -7,9 +7,13 @@ const cancelEditBtn = document.querySelector("#cancel-edit-btn");
 let oldInputValue;
 let arrayTarefas = [];
 
-const saveTodo = (text)=>{
+const saveTodo = (text, status=null)=>{
     const todo = document.createElement("div");
     todo.classList.add("todo");
+
+    if(status == 1){
+        todo.classList.add("done");
+    }
 
     const todoTitle = document.createElement("h3");
     todoTitle.innerHTML = text;
@@ -148,14 +152,23 @@ inputPesquisa.addEventListener("focus",(evt)=>{
 
 inputPesquisa.addEventListener("blur",(evt)=>{
     window.clearInterval(pegar);
-
+    
+    sairPesquisa = ()=>{
     const tarefasNaLista = [...todoList.children];
     
     tarefasNaLista.map((el)=>{
-            if(!arrayTarefas.includes(el.children[0].innerHTML)){
-                arrayTarefas.push(el.children[0].innerHTML);
-            }
+        let status = 0;
+
+        if(el.classList.contains("done")){
+            status =1;
+        }
+
+        if(!arrayTarefas.includes(el.children[0].innerHTML)){
+            const t = new tarefa(el.children[0].innerHTML,status)
+            arrayTarefas.push(t);
+        }
     });
+
     console.log(arrayTarefas);
 
     [...todoList.children].map((el)=>{
@@ -166,11 +179,20 @@ inputPesquisa.addEventListener("blur",(evt)=>{
     console.log(arrayTarefas)
         arrayTarefas.map((el)=>{
             console.log(el)
-            saveTodo(el);
+            saveTodo(el.nome,el.status);
         })
         arrayTarefas = [];
+    }
+        setTimeout(sairPesquisa,500);
 })
 
+
+class tarefa {
+    constructor(nome,status = 0){
+        this.nome = nome;
+        this.status = status;
+    }
+}
 
 
 
